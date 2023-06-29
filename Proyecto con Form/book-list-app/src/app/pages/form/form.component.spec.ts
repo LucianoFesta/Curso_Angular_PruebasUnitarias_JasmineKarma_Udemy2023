@@ -1,74 +1,99 @@
-import { FormComponent } from './form.component';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormComponent } from "./form.component";
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 describe('Form component', () => {
 
-    let component: FormComponent
-    let fixture: ComponentFixture<FormComponent>
+    let component:FormComponent;
+    let fixture:ComponentFixture<FormComponent>;
 
     beforeEach(() => {
+
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
-                ReactiveFormsModule,
+                ReactiveFormsModule
             ],
-            declarations: [
-                FormComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
-        }).compileComponents()
-    })
+            declarations: [FormComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+        }).compileComponents();
+
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(FormComponent)
-        component = fixture.componentInstance
-        fixture.detectChanges()
-    })
+
+        fixture = TestBed.createComponent(FormComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+
+    });
 
     it('should create', () => {
-        expect(component).toBeTruthy()
-    })
-    
-    it('name fild is required', () => {
-        const nameField = component.form.get('name')
-        nameField.setValue('')
-        expect(nameField.valid).toBeFalse()
-    })
+        expect(component).toBeTruthy();
+    });
 
-    it('name fild has an error with more than 5 characters', () => {
-        const nameField = component.form.get('name')
-        nameField.setValue('test name')
-        expect(nameField.valid).toBeFalse()
-    })
-    
-    it('name fild is correct with less than 5 characters', () => {
-        const nameField = component.form.get('name')
-        nameField.setValue('Jack')
-        expect(nameField.valid).toBeTrue()
-    })
+    it('name field is required', () => {
+        //obtenermos el campo nombre
+        const nameField = component.form.get('name'); 
+        //seteamos el valor al campo
+        nameField.setValue('');
+        //verificamos que el campo sea valido o no
+        expect(nameField.invalid).toBeTrue();
+    });
 
-    it('email fild is required', () => {
-        const emailField = component.form.get('email')
-        emailField.setValue('')
-        expect(emailField.valid).toBeFalse()
-    })
+    it('name field has error with more than 5 chacarcters', () => {
+        //obtenermos el campo nombre
+        const nameField = component.form.get('name'); 
+        //seteamos el valor al campo
+        nameField.setValue('test name');
+        //verificamos que el campo sea valido o no
+        expect(nameField.valid).toBeFalse();
+    });
+
+    it('name field has error with less than 5 chacarcters', () => {
+        //obtenermos el campo nombre
+        const nameField = component.form.get('name'); 
+        //seteamos el valor al campo
+        nameField.setValue('Jack');
+        //verificamos que el campo sea valido o no
+        expect(nameField.valid).toBeTrue();
+    });
+
+    it('email field is required', () => {
+        //obtenermos el campo email
+        const nameField = component.form.get('email'); 
+        //seteamos el valor al campo
+        nameField.setValue('');
+        //verificamos que el campo sea valido o no
+        expect(nameField.valid).toBeFalse();
+    });
+
+    it('email must be invalid', () => {
+        //obtenermos el campo email
+        const nameField = component.form.get('email'); 
+        //seteamos el valor al campo
+        nameField.setValue('test@');
+        //verificamos que el campo sea valido o no
+        expect(nameField.valid).toBeFalse();
+    });
 
     it('email must be valid', () => {
-        const emailField = component.form.get('email')
-        emailField.setValue('test@')
-        expect(emailField.valid).toBeFalse()
-        emailField.setValue('test@test.com')
-        expect(emailField.valid).toBeTrue()
-    })
+        //obtenermos el campo email
+        const nameField = component.form.get('email'); 
+        //seteamos el valor al campo
+        nameField.setValue('test@gmail.com');
+        //verificamos que el campo sea valido o no
+        expect(nameField.valid).toBeTrue();
+    });
 
     it('form is valid', () => {
-        const nameField = component.form.get('name')
-        const emailField = component.form.get('email')
-        nameField.setValue('Jack')
-        emailField.setValue('test@test.com')
-        expect(component.form.valid).toBeTrue()
-    })
-    
-})
+        const nameField = component.form.get('name'); 
+        const emailField = component.form.get('email'); 
+
+        nameField.setValue('Jack');
+        emailField.setValue('test@gmail.com');
+
+        expect(component.form.valid).toBeTrue();
+    });
+});
